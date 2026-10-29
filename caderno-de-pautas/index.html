@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Caderno de Pautas</title>
+<link rel="stylesheet" href="fonts.css">
+<style>
+/* ======================================================
+   PALETA — redação de madrugada, papel creme e luminária
+   ====================================================== */
+:root{
+  --night:#1c1530; --night-2:#2a1f45; --ink:#14110f; --ink-soft:#4a4340;
+  --paper:#f3ead3; --paper-2:#e6dab8; --white:#fffdf7;
+  --red:#d7301f; --yellow:#f2c230; --amber:#ffb347; --pink:#f4a3c4; --blue:#9fd3f2; --green:#a7d97a; --teal:#7fe0d0;
+  --cork:#b07a45; --cork-2:#8f5f33;
+  /* cor de cada etapa: ideia, apuração, escrita, publicada */
+  --s0:#5aa9e6; --s1:#f2c230; --s2:#d7301f; --s3:#6fbf4a;
+  --shadow:6px 6px 0 var(--ink);
+  --font-head:'Roboto Slab',Georgia,serif;
+  --font-type:'Roboto Slab',Georgia,serif;
+  --font-body:'Roboto Slab',Georgia,serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%}
+body{
+  font-family:var(--font-body); font-size:15px; line-height:1.35; color:var(--ink);
+  background:var(--night);
+  background-image:
+    radial-gradient(ellipse 60% 45% at 18% -5%, rgba(255,179,71,.45), transparent 70%),
+    radial-gradient(ellipse 40% 30% at 85% 105%, rgba(215,48,31,.18), transparent 70%),
+    linear-gradient(var(--night), #120d22);
+  background-attachment:fixed;
+  overflow-x:hidden;
+}
+/* grão de papel/filme sobre tudo */
+body::after{
+  content:""; position:fixed; inset:0; pointer-events:none; z-index:50; opacity:.07; mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='200' height='200' filter='url(%23n)'/></svg>");
+}
+button,input,textarea,select{font-family:inherit;font-size:inherit;color:inherit}
+.app{max-width:1320px;margin:0 auto;padding:28px 20px 40px;position:relative}
+@media (max-width:640px){.app{padding:16px 12px 32px}}
+
+/* ======================================================
+   JANELAS RETRÔ (papel creme, contorno preto, sombra dura)
+   ====================================================== */
+.win{background:var(--paper);border:3px solid var(--ink);box-shadow:var(--shadow);position:relative}
+.win-bar{display:flex;align-items:center;gap:14px;padding:8px 14px;border-bottom:3px solid var(--ink);background:var(--paper);font-family:var(--font-type);font-weight:600;font-size:12px;letter-spacing:1px;text-transform:uppercase}
+.dots{display:flex;gap:6px}
+.dots i{width:12px;height:12px;border:2px solid var(--ink);border-radius:50%;background:var(--white)}
+.dots i:first-child{background:var(--ink)}
+.win-title{flex:1;text-align:center;font-weight:700}
+.win-meta{white-space:nowrap}
+
+/* ======================================================
+   BOTÕES
+   ====================================================== */
+.btn{font-family:var(--font-head);font-weight:800;font-size:13px;letter-spacing:1px;text-transform:uppercase;background:var(--white);border:3px solid var(--ink);box-shadow:4px 4px 0 var(--ink);padding:10px 16px;cursor:pointer;line-height:1;transition:transform .08s,box-shadow .08s}
+.btn:hover{transform:translate(-1px,-1px);box-shadow:5px 5px 0 var(--ink)}
+.btn:active{transform:translate(3px,3px);box-shadow:1px 1px 0 var(--ink)}
+.btn.primary{background:var(--yellow)}
+.btn.danger{background:var(--red);color:var(--paper)}
+.btn.ghost{background:var(--paper)}
+
+/* ======================================================
+   CABEÇALHO — manchete de jornal
+   ====================================================== */
+.masthead{margin-bottom:26px}
+.mast-body{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;padding:18px 22px 20px;flex-wrap:wrap}
+h1{font-family:var(--font-head);font-weight:900;font-size:clamp(36px,5.6vw,66px);line-height:.95;margin:0;text-transform:uppercase;letter-spacing:-.5px}
+h1 em{font-style:normal;color:var(--red)}
+.tagline{font-family:var(--font-type);font-weight:600;font-size:13px;letter-spacing:1px;text-transform:uppercase;margin:12px 0 0;display:flex;flex-wrap:wrap;gap:6px 18px;align-items:center}
+.tagline .lbl{background:var(--ink);color:var(--paper);padding:2px 8px}
+.dates{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;margin-top:12px;font-family:var(--font-type);font-weight:600;font-size:11.5px;letter-spacing:1px;text-transform:uppercase}
+.dates label{display:flex;align-items:center;gap:8px;background:var(--white);border:2.5px solid var(--ink);box-shadow:3px 3px 0 var(--ink);padding:4px 6px 4px 10px}
+.dates input{border:0;border-left:2px solid var(--ink);background:transparent;padding:2px 4px 2px 8px;font-family:var(--font-body);font-weight:400;font-size:14px;min-width:0}
+.dates input:focus{outline:none;background:#fff9dc}
+.dates .days{color:var(--red);font-weight:700}
+.toolbar{display:flex;gap:12px;flex-wrap:wrap}
+.cork-tools{justify-content:flex-end;margin:0 0 18px}
+
+/* ======================================================
+   CENÁRIO — redação ilustrada
+   ====================================================== */
+.scene-win{margin-bottom:26px}
+.scene-wrap{position:relative;background:var(--night);border-bottom:3px solid var(--ink)}
+#scene{display:block;width:100%;height:auto}
+.toast{position:absolute;top:14px;left:50%;transform:translate(-50%,-10px);background:var(--ink);color:var(--paper);font-family:var(--font-type);font-weight:600;font-size:12px;letter-spacing:1px;text-transform:uppercase;padding:6px 14px;border:2px solid var(--paper);opacity:0;transition:.25s;pointer-events:none;white-space:nowrap;max-width:90%;text-overflow:ellipsis;overflow:hidden}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+.meter-row{display:flex;align-items:center;justify-content:center;gap:14px;padding:12px 16px;flex-wrap:wrap}
+.lbl-black{background:var(--ink);color:var(--paper);font-family:var(--font-head);font-weight:800;font-size:12px;letter-spacing:1.5px;padding:5px 10px;text-transform:uppercase;white-space:nowrap}
+.meter{flex:0 1 640px;min-width:160px;height:22px;border:3px solid var(--ink);background:var(--white);position:relative;
+  background-image:repeating-linear-gradient(90deg,transparent 0 9%,var(--ink) 9% 10%)}
+.meter i{display:block;height:100%;background:var(--yellow);width:0;transition:width .5s cubic-bezier(.2,.9,.3,1.2)}
+.meter-pct{font-family:var(--font-head);font-weight:900;font-size:22px;min-width:3.2ch;text-align:right}
+
+/* animações do cenário */
+.star{animation:tw 3s ease-in-out infinite}
+@keyframes tw{50%{opacity:.15}}
+.flk{animation:flk 6s steps(1) infinite}
+@keyframes flk{0%,70%{opacity:1}72%,78%{opacity:.1}80%,100%{opacity:1}}
+.steam{animation:steam 1.8s ease-in-out infinite;transform-box:fill-box;transform-origin:50% 100%}
+@keyframes steam{0%{opacity:0;transform:translateY(0) scaleY(.6)}40%{opacity:.9}100%{opacity:0;transform:translateY(-14px) scaleY(1.2)}}
+.tl{animation:tl 1.4s steps(5) infinite;transform-box:fill-box;transform-origin:left center}
+@keyframes tl{0%{transform:scaleX(.2)}100%{transform:scaleX(1)}}
+.shine{animation:shine 1.6s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+@keyframes shine{50%{transform:scale(1.5) rotate(20deg);opacity:.5}}
+.typing{animation:typing .5s steps(2) infinite}
+@keyframes typing{50%{transform:translateY(-2px)}}
+.scr{animation:scr 4s steps(1) infinite}
+@keyframes scr{0%,90%{opacity:1}93%{opacity:.7}}
+/* luz: --on liga/desliga a luminária, --prog é o nível de conclusão (0 a 1) */
+#scene{--on:1;--prog:0;--day:0;--blind:0;--sun:0;--sign:1}
+.dark-off{opacity:calc(.66*(1 - var(--on))*(1 - .5*var(--sun)));transition:opacity .7s}
+.dark-on{opacity:calc(var(--on)*(.58 - .28*var(--prog))*(1 - .55*var(--sun)));transition:opacity .7s}
+/* janela: dia e noite, persiana */
+.win,.blind,.cooler,.radio,.sign{cursor:pointer;outline:none}
+.sign-on{opacity:var(--sign);transition:opacity .25s}
+.radio:hover rect,.radio:focus-visible rect{stroke:#f2c230}
+#radioPop strong{display:block;font-family:var(--font-head);font-weight:900;font-size:16px;line-height:1.1;margin-bottom:3px}
+.day-only{opacity:var(--day);transition:opacity .9s}
+.night-only{opacity:calc(1 - var(--day));transition:opacity .9s}
+.sun{transform:translateY(calc((1 - var(--day))*130px));transition:transform .9s ease-in-out}
+.moon{transform:translateY(calc(var(--day)*130px));transition:transform .9s ease-in-out}
+.blind{transform:translateY(calc((var(--blind) - 1)*126px));transition:transform .7s ease-in-out}
+.win:focus-visible,.blind:focus-visible,.cooler:focus-visible{filter:brightness(1.15)}
+.warm{opacity:calc(var(--on)*(.6 + .4*var(--prog)));transition:opacity .45s}
+.shade-on{opacity:var(--on);transition:opacity .2s}
+.lamp{cursor:pointer;outline:none}
+.lamp:hover .shade,.lamp:focus-visible .shade{stroke:#fff5c2}
+/* cesta de basquete */
+.ball{cursor:grab;touch-action:none}
+#scene.aiming,#scene.aiming .ball{cursor:grabbing}
+.net{transform-box:fill-box;transform-origin:50% 0}
+.net.swish{animation:swish .45s ease-out}
+@keyframes swish{30%{transform:scaleY(1.3)}65%{transform:scaleY(.9)}}
+/* calendário de parede */
+#cal,.cal-dim{filter:brightness(calc(.55 + .45*var(--on)));transition:filter .45s}
+.cal-day,.cal-nav{cursor:pointer}
+.cal-day:hover .cal-cell{stroke-width:2.2}
+.cal-nav:hover text{fill:var(--yellow)}
+.cal-pop{position:absolute;z-index:5;min-width:190px;max-width:260px;background:var(--paper);border:3px solid var(--ink);box-shadow:4px 4px 0 var(--ink);padding:8px 10px 10px;font-size:12.5px}
+.cal-pop[hidden]{display:none}
+.cal-pop h4{margin:0 0 6px;font-family:var(--font-head);font-weight:800;font-size:12px;letter-spacing:1px;text-transform:uppercase}
+.cal-pop p{margin:0;color:var(--ink-soft)}
+.cal-pop button{display:flex;align-items:center;gap:8px;width:100%;text-align:left;background:var(--white);border:2px solid var(--ink);padding:4px 6px;margin-top:5px;cursor:pointer;line-height:1.2}
+.cal-pop button:hover{background:#fff9dc}
+.cal-pop button b{flex:none;width:12px;height:12px;border:2px solid var(--ink);background:var(--c)}
+.cal-pop button small{display:block;font-family:var(--font-type);font-size:10px;letter-spacing:.6px;text-transform:uppercase;color:var(--ink-soft)}
+.neon{animation:neon 5s linear infinite}
+@keyframes neon{0%,88%,100%{opacity:1}90%{opacity:.5}92%{opacity:1}95%{opacity:.6}}
+
+/* ======================================================
+   MURAL DE CORTIÇA — as fichas
+   ====================================================== */
+.cork{border:3px solid var(--ink);box-shadow:var(--shadow);padding:22px 18px 26px;background:var(--cork);
+  background-image:
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .35 0 0 0 0 .2 0 0 0 0 .08 0 0 0 .35 0'/></filter><rect width='160' height='160' filter='url(%23n)'/></svg>"),
+    radial-gradient(ellipse at 20% 0%, rgba(255,200,120,.25), transparent 60%);
+  box-shadow:var(--shadow),inset 0 0 0 8px #6e4a2a;padding:26px 26px 30px}
+.cork-head{display:flex;justify-content:center;margin:-40px 0 18px;position:relative;z-index:3}
+.cork-head .plate{background:var(--white);border:3px solid var(--ink);box-shadow:4px 4px 0 var(--ink);font-family:var(--font-head);font-weight:900;font-size:clamp(15px,2.4vw,22px);letter-spacing:2px;padding:6px 22px;text-transform:uppercase}
+.board{display:grid;grid-template-columns:repeat(4,1fr);gap:20px 22px}
+@media (max-width:1050px){.board{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:600px){.board{grid-template-columns:1fr}}
+.col{display:flex;flex-direction:column;gap:22px;min-height:200px;padding-top:6px;border-radius:4px;outline:3px dashed transparent;outline-offset:8px;transition:outline-color .15s,background .15s}
+/* arrastar fichas entre as etapas */
+.col.over{outline-color:rgba(20,17,15,.55);background:rgba(255,255,255,.12)}
+.card[draggable]{cursor:grab}
+.card.dragging{opacity:.35}
+.card.drop-before{margin-top:26px}
+
+.card{transition:transform .15s,box-shadow .15s,margin .12s}
+.col-tag{align-self:flex-start;display:flex;align-items:center;gap:10px;background:var(--yellow);border:2.5px solid var(--ink);box-shadow:3px 3px 0 var(--ink);padding:5px 12px;font-family:var(--font-head);font-weight:800;font-size:13px;letter-spacing:1.5px;text-transform:uppercase;transform:rotate(-1.2deg)}
+.col:nth-child(1) .col-tag{background:var(--s0)}
+.col:nth-child(2) .col-tag{transform:rotate(.8deg);background:var(--s1)}
+.col:nth-child(3) .col-tag{transform:rotate(-.6deg);background:var(--s2);color:var(--paper)}
+.col:nth-child(4) .col-tag{transform:rotate(1.1deg);background:var(--s3)}
+.col-tag .n{background:var(--ink);color:var(--paper);padding:0 7px;font-size:12px}
+.col:nth-child(3) .col-tag .n{background:var(--paper);color:var(--ink)}
+.empty{font-family:var(--font-type);font-weight:500;font-size:12.5px;letter-spacing:.5px;color:var(--ink);background:var(--white);border:2px solid var(--ink);padding:10px 12px;transform:rotate(1.5deg);opacity:.8;align-self:flex-start;box-shadow:3px 3px 0 rgba(0,0,0,.25)}
+
+.card{position:relative;border:2.5px solid var(--ink);box-shadow:5px 6px 0 rgba(0,0,0,.35);padding:18px 14px 10px;transform:rotate(var(--rot,0deg));transition:transform .15s,box-shadow .15s;font-size:13.5px;line-height:1.35}
+.card:hover{transform:rotate(0deg) translateY(-3px) scale(1.02);box-shadow:8px 10px 0 rgba(0,0,0,.35);z-index:2}
+/* alfinete */
+.card::before{content:"";position:absolute;top:-9px;left:50%;width:16px;height:16px;margin-left:-8px;border-radius:50%;background:var(--red);border:2.5px solid var(--ink);box-shadow:inset -3px -3px 0 rgba(0,0,0,.3),2px 3px 0 rgba(0,0,0,.3);z-index:1}
+.card::after{content:"";position:absolute;top:5px;left:50%;width:2px;height:8px;margin-left:-1px;background:var(--ink);opacity:.5}
+/* ideia: ficha pautada azul */
+.c0{background:#d6eafa;background-image:linear-gradient(var(--s0) 0 2px,transparent 2px),repeating-linear-gradient(transparent 0 21px,#a9c8e6 21px 22px);background-position:0 24px,0 12px;background-size:100% 100%,100% 22px}
+/* apuração: post-it amarelo */
+.c1{background:#fbe15a;border-color:var(--ink)}
+/* escrita: post-it vermelho */
+.c2{background:#f59a8c}
+/* publicada: recorte de jornal com fita crepe */
+.c3{background:var(--paper);background-image:radial-gradient(rgba(0,0,0,.14) 1px,transparent 1.3px);background-size:5px 5px;padding-top:16px}
+.c3::before,.c3::after{content:"";position:absolute;top:-8px;width:52px;height:16px;background:rgba(255,236,170,.75);border:1px solid rgba(0,0,0,.15);margin:0;border-radius:0;box-shadow:none;opacity:1}
+.c3::before{left:-14px;transform:rotate(-35deg)}
+.c3::after{right:-14px;left:auto;height:16px;transform:rotate(35deg)}
+.stamp{position:absolute;right:8px;top:6px;transform:rotate(-12deg);border:2.5px solid #2f7d1c;color:#2f7d1c;font-family:var(--font-type);font-weight:700;font-size:10px;letter-spacing:1.5px;padding:2px 6px;border-radius:3px;opacity:.85;mix-blend-mode:multiply}
+.card h3{font-family:var(--font-head);font-weight:800;font-size:15.5px;line-height:1.1;text-transform:uppercase;margin:0 0 8px;letter-spacing:.2px;word-break:break-word;padding-right:12px}
+.c3 h3{font-size:17px;padding-right:80px}
+.card .by{font-family:var(--font-type);font-weight:600;font-size:11px;letter-spacing:.8px;text-transform:uppercase;margin:0 0 6px;color:var(--ink-soft)}
+.card .by b{color:var(--ink)}
+.card .gancho{margin:0 0 8px;white-space:pre-wrap}
+.chips{display:flex;flex-wrap:wrap;gap:4px 6px;font-family:var(--font-type);font-weight:600;font-size:10.5px;letter-spacing:.6px;text-transform:uppercase}
+.chip{border:1.5px solid var(--ink);padding:1px 6px;background:rgba(255,255,255,.55)}
+.chip.src{border-style:dashed;background:transparent}
+.chip.late{background:var(--red);color:var(--paper);border-color:var(--ink)}
+.chip.today{background:var(--ink);color:var(--yellow)}
+.card-actions{display:flex;justify-content:space-between;gap:6px;margin-top:10px;padding-top:8px;border-top:1.5px dashed rgba(0,0,0,.35)}
+.grp{display:flex;gap:6px}
+.mini{width:28px;height:26px;border:2px solid var(--ink);background:var(--white);box-shadow:2px 2px 0 var(--ink);cursor:pointer;font-size:13px;line-height:1;display:grid;place-items:center;padding:0}
+.mini:hover{background:var(--yellow)}
+.mini:active{transform:translate(2px,2px);box-shadow:none}
+.mini:disabled{opacity:.3;cursor:default;background:var(--white);transform:none;box-shadow:2px 2px 0 var(--ink)}
+.mini.del:hover{background:var(--red);color:var(--paper)}
+
+/* ======================================================
+   FICHA DE PAUTA (diálogo)
+   ====================================================== */
+dialog{border:3px solid var(--ink);background:var(--paper);color:var(--ink);padding:0;width:min(600px,calc(100vw - 32px));box-shadow:10px 10px 0 var(--ink)}
+dialog::backdrop{background:rgba(10,6,20,.8)}
+.dlg-body{padding:22px}
+.dlg-body h2{font-family:var(--font-head);font-weight:900;font-size:26px;line-height:1;margin:0 0 4px;text-transform:uppercase}
+.dlg-sub{font-family:var(--font-type);font-weight:600;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--ink-soft);margin:0 0 18px}
+.field{display:flex;flex-direction:column;gap:4px;margin-bottom:14px}
+.field label,.field .lbl{font-family:var(--font-type);font-weight:600;font-size:11px;letter-spacing:1px;text-transform:uppercase}
+.field input,.field textarea,.field select{background:var(--white);border:2.5px solid var(--ink);padding:8px 10px;font-size:15px;width:100%;box-shadow:3px 3px 0 var(--ink)}
+/* campo de etiquetas (várias editorias / fontes) */
+.tags{display:flex;flex-wrap:wrap;gap:6px;align-items:center;background:var(--white);border:2.5px solid var(--ink);padding:6px 8px;box-shadow:3px 3px 0 var(--ink);cursor:text;min-height:44px}
+.tags:focus-within{background:#fff9dc}
+.tags input{border:0;box-shadow:none;background:transparent;padding:4px 2px;flex:1;min-width:140px;width:auto}
+.tags input:focus{background:transparent}
+.tag{display:inline-flex;align-items:center;gap:6px;border:1.5px solid var(--ink);background:var(--yellow);padding:2px 4px 2px 8px;font-family:var(--font-type);font-weight:600;font-size:11px;letter-spacing:.6px;text-transform:uppercase}
+.tag button{border:0;background:var(--ink);color:var(--paper);width:16px;height:16px;line-height:1;font-size:11px;cursor:pointer;padding:0;display:grid;place-items:center}
+.tag button:hover{background:var(--red)}
+.field .hint{font-size:11px;color:var(--ink-soft);margin-top:2px}
+.field input:focus,.field textarea:focus,.field select:focus{outline:none;background:#fff9dc}
+.field textarea{min-height:84px;resize:vertical}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media (max-width:520px){.row{grid-template-columns:1fr}}
+.dlg-actions{display:flex;justify-content:flex-end;gap:12px;margin-top:8px;flex-wrap:wrap}
+
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- ================= MANCHETE ================= -->
+  <header class="win masthead">
+    <div class="win-bar"><span class="dots"><i></i><i></i><i></i></span><span class="win-title"></span><span class="win-meta" id="clock">00:00</span></div>
+    <div class="mast-body">
+      <div>
+        <h1>Caderno<br>de <em>Pautas</em></h1>
+        <p class="tagline">
+          <span class="lbl">Edição em andamento</span>
+          <span>Nº <b id="edicao">1</b></span>
+        </p>
+        <div class="dates">
+          <label>Início da redação <input type="date" id="dInicio"></label>
+          <label>Fechamento <input type="date" id="dFim"></label>
+          <span class="days" id="dDias"></span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ================= CENÁRIO ================= -->
+  <section class="win scene-win">
+    <div class="win-bar"><span class="dots"><i></i><i></i><i></i></span></div>
+    <div class="scene-wrap">
+      <svg id="scene" viewBox="0 0 960 380" role="group" aria-label="Redação de madrugada"></svg>
+      <div class="cal-pop" id="calPop" hidden></div>
+      <div class="cal-pop" id="radioPop" aria-live="polite" hidden></div>
+      <div class="toast" id="toast" aria-live="polite"></div>
+    </div>
+    <div class="meter-row">
+      <span class="lbl-black">Nível de conclusão</span>
+      <div class="meter"><i id="meterFill"></i></div>
+      <span class="meter-pct" id="meterPct">0%</span>
+    </div>
+  </section>
+
+  <!-- ================= MURAL ================= -->
+  <section class="cork">
+    <div class="cork-head"><span class="plate">Pautas em progresso</span></div>
+    <div class="toolbar cork-tools">
+      <button type="button" class="btn primary" id="newBtn">+ Nova pauta</button>
+      <button type="button" class="btn ghost" id="exportBtn">Exportar</button>
+      <button type="button" class="btn ghost" id="importBtn">Importar</button>
+      <input type="file" id="importFile" accept="application/json" hidden>
+    </div>
+    <div class="board" id="board"></div>
+  </section>
+
+</div>
+
+<!-- ================= FICHA ================= -->
+<dialog id="dlg">
+  <div class="win-bar"><span class="dots"><i></i><i></i><i></i></span><span class="win-title">Ficha de pauta</span><span class="win-meta" id="dlgNum"></span></div>
+  <form class="dlg-body" method="dialog" id="form">
+    <h2 id="dlgTitle">Nova pauta</h2>
+    <p class="dlg-sub">Preencha a ficha e pregue no mural</p>
+    <div class="field"><label for="fTitulo">Título da pauta</label><input id="fTitulo" required maxlength="80" placeholder="Ex.: O ópio artístico"></div>
+    <div class="field"><label for="fDescricao">Descrição</label><textarea id="fDescricao" maxlength="600" placeholder="Do que trata a pauta."></textarea></div>
+    <div class="row">
+      <div class="field"><label for="fJornalista">Jornalista responsável</label><input id="fJornalista" maxlength="60" placeholder="Quem assina"></div>
+      <div class="field"><label for="fStatus">Etapa</label>
+        <select id="fStatus"><option value="0">Ideia</option><option value="1">Apuração</option><option value="2">Escrita</option><option value="3">Publicada</option></select>
+      </div>
+    </div>
+    <div class="field"><label for="fEditoriaIn">Editorias</label>
+      <div class="tags" id="tEditoria"><input id="fEditoriaIn" maxlength="30" placeholder="Cultura, Cidade, Tech..."></div>
+      <span class="hint">Enter ou vírgula para adicionar mais de uma.</span>
+    </div>
+    <div class="field"><label for="fFonteIn">Fontes / contatos</label>
+      <div class="tags" id="tFonte"><input id="fFonteIn" maxlength="80" placeholder="Quem ouvir"></div>
+      <span class="hint">Enter ou vírgula para adicionar mais de uma.</span>
+    </div>
+    <div class="row">
+      <div class="field"><label for="fInicio">Início</label><input id="fInicio" type="date"></div>
+      <div class="field"><label for="fPrazo">Encerramento (prazo)</label><input id="fPrazo" type="date"></div>
+    </div>
+    <div class="dlg-actions">
+      <button type="button" class="btn danger" id="delBtn" hidden>Apagar</button>
+      <button type="button" class="btn ghost" id="dupBtn" hidden>Duplicar</button>
+      <button type="button" class="btn ghost" id="cancelBtn">Cancelar</button>
+      <button type="submit" class="btn primary" id="saveBtn">Pregar no mural</button>
+    </div>
+  </form>
+</dialog>
+
+<script src="cenario.js"></script>
+<script>
+/* ====================== dados ====================== */
+const KEY = 'caderno-de-pautas.v1';
+const STATUS = ['Ideia', 'Apuração', 'Escrita', 'Publicada'];
+const EMPTY = ['Nenhuma ideia anotada.', 'Ninguém apurando.', 'Nada em escrita.', 'Nada publicado ainda.'];
+let pautas = load();
+let editing = null;
+
+function uid() { return Math.random().toString(36).slice(2, 10); }
+function todayISO() { const d = new Date(); return new Date(d.getTime() - d.getTimezoneOffset() * 60000).toISOString().slice(0, 10); }
+function fmtData(iso) { if (!iso) return ''; const p = iso.split('-'); return p[2] + '/' + p[1]; }
+function esc(s) { return String(s || '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c])); }
+function hash(s) { let h = 0; for (const c of s) h = (h * 31 + c.charCodeAt(0)) | 0; return Math.abs(h); }
+
+// aceita fichas antigas (editoria/fonte como texto, "gancho") e novas (listas, "descricao")
+function lista(v) { if (Array.isArray(v)) return v.map(x => String(x).trim()).filter(Boolean); return String(v || '').split(',').map(x => x.trim()).filter(Boolean); }
+function norm(p) {
+  return {
+    id: p.id || uid(), titulo: String(p.titulo || ''), descricao: String(p.descricao != null ? p.descricao : (p.gancho || '')),
+    jornalista: String(p.jornalista || ''), editorias: lista(p.editorias != null ? p.editorias : p.editoria), fontes: lista(p.fontes != null ? p.fontes : p.fonte),
+    inicio: p.inicio || '', prazo: p.prazo || '', status: Math.max(0, Math.min(3, +p.status || 0)), criadaEm: p.criadaEm || Date.now(), movidaEm: p.movidaEm
+  };
+}
+function load() {
+  try { const raw = localStorage.getItem(KEY); if (raw) return JSON.parse(raw).map(norm); } catch (e) {}
+  const iso = n => { const x = new Date(); x.setDate(x.getDate() + n); return new Date(x.getTime() - x.getTimezoneOffset() * 60000).toISOString().slice(0, 10); };
+  return [
+    { titulo: 'Feiras de rua depois da pandemia', descricao: 'Prefeitura anuncia novo edital em outubro.', jornalista: 'Laura Viana', editorias: ['Cidade'], inicio: iso(3), prazo: iso(9), fontes: ['Associação de feirantes'], status: 0 },
+    { titulo: 'Quem escreve os jogos brasileiros', descricao: 'Roteiristas de games contam como entram no mercado.', jornalista: 'Laura Viana', editorias: ['Cultura', 'Games'], inicio: iso(-4), prazo: iso(4), fontes: ['Estúdios indie de Recife', 'Abragames'], status: 1 },
+    { titulo: 'Madrugada nas redações', descricao: 'Uma noite com quem fecha o jornal.', jornalista: '', editorias: ['Perfil'], inicio: iso(-6), prazo: iso(1), fontes: ['Editor de fechamento'], status: 2 },
+    { titulo: 'O ópio artístico', descricao: 'Especial sobre arte e vício.', jornalista: 'Laura Viana', editorias: ['Cultura'], inicio: iso(-27), prazo: iso(-20), fontes: ['Gadugi'], status: 3 },
+  ].map(norm);
+}
+function save() { try { localStorage.setItem(KEY, JSON.stringify(pautas)); } catch (e) {} }
+
+/* ====================== mural ====================== */
+const board = document.getElementById('board');
+const F = id => document.getElementById(id);
+
+function render() {
+  board.innerHTML = '';
+  STATUS.forEach((nome, s) => {
+    const col = document.createElement('div'); col.className = 'col'; col.dataset.s = s;
+    const lista = pautas.filter(p => p.status === s);
+    col.innerHTML = '<div class="col-tag">' + nome + '<span class="n">' + lista.length + '</span></div>';
+    if (!lista.length) col.innerHTML += '<div class="empty">' + EMPTY[s] + '</div>';
+    lista.forEach(p => col.appendChild(card(p)));
+    board.appendChild(col);
+  });
+  renderHud();
+  updateLight();
+  renderCalendar();
+}
+
+function card(p) {
+  const el = document.createElement('article');
+  el.className = 'card c' + p.status;
+  el.dataset.id = p.id;
+  el.draggable = true;
+  el.style.setProperty('--rot', ((hash(p.id) % 50) / 10 - 2.5).toFixed(1) + 'deg');
+  const hoje = todayISO();
+  let prazo = '';
+  if (p.prazo && p.status < 3) {
+    const late = p.prazo < hoje, today = p.prazo === hoje;
+    prazo = '<span class="chip ' + (late ? 'late' : today ? 'today' : '') + '">' + (late ? 'atrasada ' : today ? 'fecha hoje ' : 'até ') + fmtData(p.prazo) + '</span>';
+  }
+  el.innerHTML =
+    (p.status === 3 ? '<span class="stamp">Publicada</span>' : '') +
+    '<h3>' + esc(p.titulo) + '</h3>' +
+    (p.jornalista ? '<p class="by">Por <b>' + esc(p.jornalista) + '</b></p>' : '') +
+    (p.descricao ? '<p class="gancho">' + esc(p.descricao) + '</p>' : '') +
+    '<div class="chips">' +
+      p.editorias.map(e => '<span class="chip">' + esc(e) + '</span>').join('') + prazo +
+      p.fontes.map(f => '<span class="chip src">' + esc(f) + '</span>').join('') +
+    '</div>' +
+    '<div class="card-actions">' +
+      '<div class="grp">' +
+        '<button class="mini" data-act="back" title="Voltar etapa"' + (p.status === 0 ? ' disabled' : '') + '>&#9664;</button>' +
+        '<button class="mini" data-act="fwd" title="Avançar etapa"' + (p.status === 3 ? ' disabled' : '') + '>&#9654;</button>' +
+      '</div>' +
+      '<div class="grp">' +
+        '<button class="mini" data-act="dup" title="Duplicar">&#10697;</button>' +
+        '<button class="mini" data-act="edit" title="Editar">&#9998;</button>' +
+        '<button class="mini del" data-act="del" title="Apagar">&#10005;</button>' +
+      '</div>' +
+    '</div>';
+  return el;
+}
+
+board.addEventListener('click', e => {
+  const b = e.target.closest('button[data-act]'); if (!b) return;
+  const p = pautas.find(x => x.id === b.closest('.card').dataset.id); if (!p) return;
+  if (b.dataset.act === 'fwd')  move(p, 1);
+  if (b.dataset.act === 'back') move(p, -1);
+  if (b.dataset.act === 'edit') openDlg(p);
+  if (b.dataset.act === 'dup')  duplicate(p);
+  if (b.dataset.act === 'del')  remove(p);
+});
+
+/* arrastar uma ficha: soltar em outra coluna muda a etapa; soltar entre fichas muda a ordem */
+let dragId = null;
+function dropBefore(col, y) {
+  return [...col.querySelectorAll('.card:not(.dragging)')].find(c => { const r = c.getBoundingClientRect(); return y < r.top + r.height / 2; }) || null;
+}
+function clearDrop() { board.querySelectorAll('.over,.drop-before').forEach(x => x.classList.remove('over', 'drop-before')); }
+board.addEventListener('dragstart', e => {
+  const c = e.target.closest('.card'); if (!c) return;
+  dragId = c.dataset.id; e.dataTransfer.effectAllowed = 'move'; e.dataTransfer.setData('text/plain', dragId);
+  setTimeout(() => c.classList.add('dragging'));
+});
+board.addEventListener('dragover', e => {
+  const col = e.target.closest('.col'); if (!col || !dragId) return;
+  e.preventDefault(); e.dataTransfer.dropEffect = 'move';
+  clearDrop(); col.classList.add('over');
+  const alvo = dropBefore(col, e.clientY); if (alvo) alvo.classList.add('drop-before');
+});
+board.addEventListener('drop', e => {
+  const col = e.target.closest('.col'), p = pautas.find(x => x.id === dragId); if (!col || !p) return;
+  e.preventDefault();
+  const alvo = dropBefore(col, e.clientY), antes = p.status, novo = +col.dataset.s;
+  pautas.splice(pautas.indexOf(p), 1);
+  pautas.splice(alvo ? pautas.findIndex(x => x.id === alvo.dataset.id) : pautas.length, 0, p);
+  dragId = null;
+  if (novo !== antes) { p.status = novo; p.movidaEm = Date.now(); save(); render(); announce(novo); }
+  else { save(); render(); }
+});
+board.addEventListener('dragend', () => { dragId = null; clearDrop(); board.querySelectorAll('.dragging').forEach(c => c.classList.remove('dragging')); });
+
+function duplicate(p) {
+  const copia = norm(Object.assign({}, p, { id: uid(), titulo: (p.titulo + ' (cópia)').slice(0, 80), editorias: p.editorias.slice(), fontes: p.fontes.slice(), criadaEm: Date.now(), movidaEm: undefined }));
+  pautas.splice(pautas.indexOf(p) + 1, 0, copia);
+  save(); render(); toast('Pauta duplicada.');
+}
+
+function move(p, d) {
+  const novo = Math.max(0, Math.min(3, p.status + d)); if (novo === p.status) return;
+  p.status = novo; p.movidaEm = Date.now(); save(); render(); announce(novo);
+}
+function announce(novo) {
+  if (novo === 3) { toast('Pauta publicada! A redação comemora.'); celebrate(); }
+  else if (novo === 2) toast('Hora de escrever.');
+  else if (novo === 1) toast('Apuração começou.');
+  else toast('De volta ao caderno de ideias.');
+}
+function remove(p) {
+  if (!confirm('Tirar a pauta "' + p.titulo + '" do mural?')) return;
+  pautas = pautas.filter(x => x.id !== p.id); save(); render(); toast('Pauta foi para o lixo.');
+}
+function renderHud() {
+  const total = pautas.length, pub = pautas.filter(p => p.status === 3).length;
+  const pct = total ? Math.round(pautas.reduce((a, p) => a + p.status, 0) / (3 * total) * 100) : 0;
+  F('meterFill').style.width = pct + '%';
+  F('meterPct').textContent = pct + '%';
+  F('edicao').textContent = pub + 1;
+}
+
+/* ====================== datas da redação (início e fechamento) ====================== */
+const META_KEY = 'caderno-de-pautas.meta';
+let meta = {};
+try { meta = JSON.parse(localStorage.getItem(META_KEY) || '{}') || {}; } catch (e) {}
+function saveMeta() { try { localStorage.setItem(META_KEY, JSON.stringify(meta)); } catch (e) {} }
+function renderDates() {
+  F('dInicio').value = meta.inicio || ''; F('dFim').value = meta.fim || '';
+  let txt = '';
+  if (meta.fim) {
+    const dias = Math.round((new Date(meta.fim + 'T00:00') - new Date(todayISO() + 'T00:00')) / 86400000);
+    txt = dias > 1 ? 'Faltam ' + dias + ' dias' : dias === 1 ? 'Fecha amanhã' : dias === 0 ? 'Fecha hoje!' : 'Fechou há ' + (-dias) + ' dia' + (dias < -1 ? 's' : '');
+  }
+  F('dDias').textContent = txt;
+}
+['dInicio', 'dFim'].forEach(id => F(id).addEventListener('change', () => {
+  meta.inicio = F('dInicio').value; meta.fim = F('dFim').value;
+  saveMeta(); renderDates(); toast('Datas da redação atualizadas.');
+}));
+
+/* ====================== ficha ====================== */
+const dlg = F('dlg'), form = F('form');
+// campo de etiquetas: Enter ou vírgula adiciona, Backspace no vazio remove a última
+function tagBox(boxId) {
+  const box = F(boxId), inp = box.querySelector('input'); let items = [];
+  function draw() {
+    box.querySelectorAll('.tag').forEach(t => t.remove());
+    items.forEach((v, i) => { const t = document.createElement('span'); t.className = 'tag'; t.innerHTML = esc(v) + '<button type="button" data-i="' + i + '" aria-label="Remover ' + esc(v) + '">&#10005;</button>'; box.insertBefore(t, inp); });
+  }
+  function add() { const v = inp.value.replace(/,/g, ' ').trim(); if (v && !items.includes(v)) items.push(v); inp.value = ''; draw(); }
+  inp.addEventListener('keydown', e => {
+    if (e.key === 'Enter' || e.key === ',') { e.preventDefault(); add(); }
+    else if (e.key === 'Backspace' && !inp.value && items.length) { items.pop(); draw(); }
+  });
+  inp.addEventListener('blur', add);
+  box.addEventListener('click', e => { const b = e.target.closest('button[data-i]'); if (b) { items.splice(+b.dataset.i, 1); draw(); inp.focus(); } else if (e.target === box) inp.focus(); });
+  return { get: () => { add(); return items.slice(); }, set: v => { items = (v || []).slice(); inp.value = ''; draw(); } };
+}
+const tEditoria = tagBox('tEditoria'), tFonte = tagBox('tFonte');
+function openDlg(p) {
+  editing = p || null;
+  F('dlgTitle').textContent = p ? 'Editar pauta' : 'Nova pauta';
+  F('dlgNum').textContent = p ? 'nº ' + String(pautas.indexOf(p) + 1).padStart(3, '0') : 'nº ' + String(pautas.length + 1).padStart(3, '0');
+  F('fTitulo').value = p ? p.titulo : '';
+  F('fDescricao').value = p ? (p.descricao || '') : '';
+  F('fJornalista').value = p ? (p.jornalista || '') : '';
+  tEditoria.set(p ? p.editorias : []);
+  tFonte.set(p ? p.fontes : []);
+  F('fInicio').value = p ? (p.inicio || '') : todayISO();
+  F('fPrazo').value = p ? (p.prazo || '') : '';
+  F('fStatus').value = p ? p.status : 0;
+  F('delBtn').hidden = !p;
+  F('dupBtn').hidden = !p;
+  F('saveBtn').textContent = p ? 'Salvar ficha' : 'Pregar no mural';
+  dlg.showModal(); F('fTitulo').focus();
+}
+F('newBtn').onclick = () => openDlg(null);
+F('cancelBtn').onclick = () => dlg.close();
+F('dupBtn').onclick = () => { if (editing) { dlg.close(); duplicate(editing); } };
+F('delBtn').onclick =() => { if (editing) { dlg.close(); remove(editing); } };
+form.addEventListener('submit', e => {
+  e.preventDefault();
+  const dados = { titulo: F('fTitulo').value.trim(), descricao: F('fDescricao').value.trim(), jornalista: F('fJornalista').value.trim(), editorias: tEditoria.get(), fontes: tFonte.get(), inicio: F('fInicio').value, prazo: F('fPrazo').value, status: +F('fStatus').value };
+  if (!dados.titulo) return;
+  if (editing) {
+    const antes = editing.status; Object.assign(editing, dados);
+    if (antes !== 3 && dados.status === 3) { toast('Pauta publicada! A redação comemora.'); celebrate(); } else toast('Ficha atualizada.');
+  } else {
+    pautas.push(norm(dados)); toast('Nova ficha pregada no mural.');
+  }
+  save(); render(); dlg.close();
+});
+
+/* ====================== exportar / importar ====================== */
+F('exportBtn').onclick = () => {
+  const blob = new Blob([JSON.stringify(pautas, null, 2)], { type: 'application/json' });
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'caderno-de-pautas-' + todayISO() + '.json'; a.click(); URL.revokeObjectURL(a.href);
+  toast('Caderno exportado.');
+};
+F('importBtn').onclick = () => F('importFile').click();
+F('importFile').onchange = async e => {
+  const f = e.target.files[0]; if (!f) return;
+  try {
+    const lidas = JSON.parse(await f.text());
+    if (!Array.isArray(lidas)) throw new Error('formato');
+    pautas = lidas.filter(p => p && p.titulo).map(norm);
+    save(); render(); toast(pautas.length + ' fichas importadas.');
+  } catch (err) { toast('Arquivo inválido.'); }
+  e.target.value = '';
+};
+
+/* ====================== toast e relógio ====================== */
+let toastT;
+function toast(msg) { const t = F('toast'); t.textContent = msg; t.classList.add('show'); clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove('show'), 2600); }
+function tick() {
+  const d = new Date(); F('clock').textContent = String(d.getHours()).padStart(2, '0') + ':' + String(d.getMinutes()).padStart(2, '0');
+  // ponteiros do relógio de parede, no horário local
+  const c = ' ' + CLOCK.x + ' ' + CLOCK.y + ')', sec = F('clockSec'), m = F('clockMin'), h = F('clockHour');
+  if (sec) sec.setAttribute('transform', 'rotate(' + (d.getSeconds() * 6) + c);
+  if (m) m.setAttribute('transform', 'rotate(' + (d.getMinutes() * 6 + d.getSeconds() * .1) + c);
+  if (h) h.setAttribute('transform', 'rotate(' + ((d.getHours() % 12) * 30 + d.getMinutes() * .5) + c);
+}
+setInterval(tick, 1000);
+
+/* confete no SVG */
+let confetti = [], raf = null;
+function celebrate() {
+  const cores = ['#f2c230', '#d7301f', '#f4a3c4', '#9fd3f2', '#a7d97a', '#fffdf7'];
+  for (let i = 0; i < 70; i++) confetti.push({ x: Math.random() * W, y: -Math.random() * 60, vx: (Math.random() - .5) * 1.2, vy: 1 + Math.random() * 2, r: Math.random() * 360, c: cores[i % cores.length] });
+  if (!raf) raf = requestAnimationFrame(stepConfetti);
+}
+function stepConfetti() {
+  const layer = F('confetti'); if (!layer) { raf = null; return; }
+  confetti = confetti.filter(c => c.y < H + 10);
+  layer.innerHTML = confetti.map(c => '<rect x="' + c.x + '" y="' + c.y + '" width="6" height="4" fill="' + c.c + '" transform="rotate(' + c.r + ' ' + c.x + ' ' + c.y + ')"/>').join('');
+  confetti.forEach(c => { c.x += c.vx; c.y += c.vy; c.vy += .04; c.r += 6; });
+  raf = confetti.length ? requestAnimationFrame(stepConfetti) : null;
+}
+
+buildScene();
+render();
+renderDates();
+tick();
+</script>
+</body>
+</html>

@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Writtp — software de roteiro para desktop</title>
+<meta name="description" content="Writtp: software de roteiro para Windows, offline, da primeira ideia até a ordem do dia.">
+<style>
+:root{--paper:#f7f5ef;--ink:#1d1d1d;--muted:#5f5f5f;--line:#dcd8cc;--brand:#6d4aff}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:var(--paper);color:var(--ink);font:16px/1.6 system-ui,-apple-system,"Segoe UI",sans-serif}
+.wrap{max-width:960px;margin:0 auto;padding:0 20px}
+header{display:flex;justify-content:space-between;align-items:center;padding:22px 0;border-bottom:1px solid var(--line)}
+.logo{font-family:"Courier New",Courier,monospace;font-weight:700;font-size:20px;letter-spacing:.02em}
+nav a{color:var(--muted);text-decoration:none;margin-left:18px;font-size:14px}
+nav a:hover{color:var(--ink)}
+.hero{padding:88px 0 72px;text-align:left}
+.hero .kicker{font-family:"Courier New",Courier,monospace;font-size:13px;text-transform:uppercase;letter-spacing:.12em;color:var(--muted);margin:0 0 18px}
+.hero h1{font-size:clamp(34px,6vw,56px);line-height:1.1;margin:0 0 20px;letter-spacing:-.02em}
+.hero p.lead{font-size:19px;color:var(--muted);max-width:620px;margin:0 0 32px}
+.btns{display:flex;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;padding:12px 20px;border-radius:8px;text-decoration:none;font-weight:600;border:1px solid var(--ink)}
+.btn.primary{background:var(--ink);color:var(--paper)}
+.btn.ghost{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:14px}
+section{padding:56px 0;border-top:1px solid var(--line)}
+section h2{font-size:24px;margin:0 0 24px;letter-spacing:-.01em}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px}
+.card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:22px}
+.card h3{font-family:"Courier New",Courier,monospace;font-size:16px;margin:0 0 8px;text-transform:uppercase}
+.card p{margin:0;color:var(--muted);font-size:15px}
+.steps{display:flex;flex-wrap:wrap;gap:0;counter-reset:s;list-style:none;padding:0;margin:0}
+.steps li{flex:1 1 150px;padding:18px 16px 18px 0;font-family:"Courier New",Courier,monospace;font-size:15px}
+.steps li::before{counter-increment:s;content:counter(s,decimal-leading-zero);display:block;color:var(--brand);font-weight:700;margin-bottom:6px}
+.closing{padding:64px 0;text-align:center}
+.closing h2{margin-bottom:12px}
+.closing p{color:var(--muted);margin:0 0 24px}
+footer{border-top:1px solid var(--line);padding:24px 0 40px;color:var(--muted);font-size:14px}
+@media (max-width:520px){nav a{margin-left:12px}.hero{padding:56px 0 48px}}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header>
+    <span class="logo">Writtp</span>
+    <nav><a href="#recursos">Recursos</a><a href="#como">Como funciona</a></nav>
+  </header>
+
+  <div class="hero">
+    <p class="kicker">Software de roteiro · Windows · offline</p>
+    <h1>Escreva o roteiro. Organize a produção. Sem internet.</h1>
+    <p class="lead">Um software de roteiro com interface limpa, que acompanha a história da primeira ideia até a ordem do dia.</p>
+    <div class="btns">
+      <a class="btn primary" href="https://github.com/lauracarneval" target="_blank" rel="noopener">Acompanhar no GitHub</a>
+      <a class="btn ghost" href="#recursos">Ver recursos</a>
+    </div>
+    <p class="status">Em desenvolvimento. Ainda não há versão para baixar.</p>
+  </div>
+</div>
+
+<section id="recursos">
+  <div class="wrap">
+    <h2>Recursos</h2>
+    <div class="grid">
+      <article class="card">
+        <h3>Escrever</h3>
+        <p>Formatação de roteiro na tela e no PDF, com um motor de paginação próprio.</p>
+      </article>
+      <article class="card">
+        <h3>Estruturar</h3>
+        <p>Organize as cenas em raias e veja a história inteira de uma vez.</p>
+      </article>
+      <article class="card">
+        <h3>Produção</h3>
+        <p>Decupagem, cronograma em stripboard e ordem do dia, sem trocar de programa.</p>
+      </article>
+      <article class="card">
+        <h3>Arquivo seu</h3>
+        <p>Cada roteiro vira um arquivo .lauda local. Nada depende de conta ou de nuvem.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="como">
+  <div class="wrap">
+    <h2>Como funciona</h2>
+    <ol class="steps">
+      <li>Ideia</li>
+      <li>Escrita</li>
+      <li>Estrutura</li>
+      <li>Revisão</li>
+      <li>Produção</li>
+    </ol>
+  </div>
+</section>
+
+<section class="closing">
+  <div class="wrap">
+    <h2>Quer acompanhar o projeto?</h2>
+    <p>O código e as novidades ficam no GitHub.</p>
+    <a class="btn primary" href="https://github.com/lauracarneval" target="_blank" rel="noopener">Ir para o GitHub</a>
+  </div>
+</section>
+
+<div class="wrap">
+  <footer>Writtp é o nome provisório do projeto. Tauri 2, Rust e TypeScript, com macOS previsto para depois.</footer>
+</div>
+
+</body>
+</html>
